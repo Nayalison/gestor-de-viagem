@@ -1,0 +1,10 @@
+<h1>Imóveis</h1>
+  <div class="col s12 m4" ng-repeat="imovel in indexController.imoveis">
+    <div class="icon-block">
+    <h2 class="center brown-text"><i class="mdi-action-home"></i></h2>
+    <h5 class="center">
+      <a ng-href="#/imoveis/{{imovel.id}}">{{imovel.titulo}}</a>
+    </h5>
+    <p class="light">{{imovel.descricao}}</p>
+  </div>
+</div>
