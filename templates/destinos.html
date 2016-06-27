@@ -3,28 +3,29 @@
   <!--<h1>Destinos</h1>-->
   <form ng-submit="adicionarIntinerario(dados.intinerario)">
     <div class="row">
-      <div class="col-lg-3">
+      <div class="col-lg-2">
         <label for="pais">País</label>
         <select-pais name="pais" ng-model="dados.intinerario.pais" ng-required="true" chosen/>
       </div>
 
-      <div class="col-lg-3">
+      <div class="col-lg-2">
         <label for="cidade">Cidade</label>
         <input type="text" name="cidade" ng-model="dados.intinerario.cidade" ng-required="true"/>
       </div>
 
-      <div class="col-lg-3">
+      <div class="col-lg-2">
         <label for="chegada">Chegada</label>
         <input type="date" name="chegada" ng-model="dados.intinerario.chegada" ng-required="true"/>
       </div>
 
-      <div class="col-lg-3">
+      <div class="col-lg-2">
         <label for="saida">Saída</label>
         <input type="date" name="saida" ng-model="dados.intinerario.saida" ng-required="true"/>
       </div>
 
-      <div class="col-lg-3">
-       <input type="submit" class="btn-small btn-primary" value="Adicionar">
+      <div class="col-lg-2">
+       <label for="adicionar">&emsp;</label>
+       <input name="adicionar" type="submit" class="btn-small btn-primary" value="Adicionar">
       </div>
     </div>
   </form>
@@ -33,32 +34,36 @@
 
 <fieldset>
   <legend>Destinos</legend>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>País</th>
+          <th>Cidade</th>
+          <th>Chegada</th>
+          <th>Saída</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="destino in destinos">
+          <td>{{destino.pais.name}}</td>
+          <td>{{destino.cidade}}</td>
+          <td>{{destino.chegada | date: "dd/MM/yyyy"}}</td>
+          <td>{{destino.saida | date: "dd/MM/yyyy"}}</td>
+          <td>
+            <div class="btn-toolbar" role="toolbar">
+              <button type="button" class="btn btn-default btn-sm" ng-click='editar(destino)'>
+                <span class="glyphicon glyphicon-edit" />
+              </button>
+              <button type="button" class="btn btn-danger btn-sm" ng-click='deletar(destino)'>
+                <span class="icon glyphicon glyphicon-trash" />
+              </button>
+            </div>
 
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>País</th>
-        <th>Cidade</th>
-        <th>Data</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="destino in destinos">
-        <td>{{destino.pais.name}}</td>
-        <td>{{destino.cidade}}</td>
-        <td>{{destino.chegada | date: "dd/MM/yyyy"}}</td>
-        <td>{{destino.saida | date: "dd/MM/yyyy"}}</td>
-        <td>
-          <a class="btn btn-default btn-sm" ng-click='editar(destino)'>
-            <i class="glyphicon glyphicon-edit" />
-          </a>
-          <a class="btn btn-danger btn-sm" ng-click='deletar(destino)'>
-            <i class="icon glyphicon glyphicon-trash" />
-          </a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </fieldset>
