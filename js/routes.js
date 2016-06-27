@@ -7,7 +7,7 @@ angular.module('GestorDeViagens')
     })
     .when('/destinos', {
       templateUrl: 'templates/destinos.html',
-      // controller: 'ImoveisExibirController',
+      controller: 'DestinoController',
       // controllerAs: 'exibir'
     })
     .when('/gastos', {

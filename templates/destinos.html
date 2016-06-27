@@ -1,27 +1,58 @@
-<h1>Usuários</h1>
-<div class="col s12 m4">
-  <div class="icon-block">
-    <h2 class="center brown-text"><i class="mdi-image-flash-on"></i></h2>
-    <h5 class="center">Speeds up development</h5>
+<fieldset>
+  <legend>Destino</legend>
+  <!--<h1>Destinos</h1>-->
+  <form ng-submit="adicionarIntinerario(dados.intinerario)">
+    <div class="row">
+      <div class="col-lg-3">
+        <label for="pais">País</label>
+        <select-pais name="pais" ng-model="dados.intinerario.pais" ng-required="true" chosen/>
+      </div>
 
-    <p class="light">We did most of the heavy lifting for you to provide a default stylings that incorporate our custom components. Additionally, we refined animations and transitions to provide a smoother experience for developers.</p>
-  </div>
-</div>
+      <div class="col-lg-3">
+        <label for="cidade">Cidade</label>
+        <input type="text" name="cidade" ng-model="dados.intinerario.cidade" ng-required="true"/>
+      </div>
 
-<div class="col s12 m4">
-  <div class="icon-block">
-    <h2 class="center brown-text"><i class="mdi-social-group"></i></h2>
-    <h5 class="center">User Experience Focused</h5>
+      <div class="col-lg-3">
+        <label for="data">Data</label>
+        <input type="date" name="data" ng-model="dados.intinerario.data" ng-required="true"/>
+      </div>
 
-    <p class="light">By utilizing elements and principles of Material Design, we were able to create a framework that incorporates components and animations that provide more feedback to users. Additionally, a single underlying responsive system across all platforms allow for a more unified user experience.</p>
-  </div>
-</div>
+      <div class="col-lg-3">
+       <input type="submit" class="btn-small btn-primary" value="Adicionar">
+      </div>
+    </div>
+  </form>
+</fieldset>
 
-<div class="col s12 m4">
-  <div class="icon-block">
-    <h2 class="center brown-text"><i class="mdi-action-settings"></i></h2>
-    <h5 class="center">Easy to work with</h5>
 
-    <p class="light">We have provided detailed documentation as well as specific code examples to help new users get started. We are also always open to feedback and can answer any questions a user may have about Materialize.</p>
-  </div>
-</div>
+<fieldset>
+  <legend>Destinos</legend>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>País</th>
+        <th>Cidade</th>
+        <th>Data</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="destino in destinos">
+        <td>{{destino.pais.name}}</td>
+        <td>{{destino.cidade}}</td>
+        <td>{{destino.data | date: "dd/MM/yyyy"}}</td>
+        <td>
+          <a class="btn btn-default btn-sm" ng-click='editar(destino)'>
+            <i class="glyphicon glyphicon-edit" />
+          </a>
+          <a class="btn btn-danger btn-sm" ng-click='deletar(destino)'>
+            <i class="icon glyphicon glyphicon-trash" />
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</fieldset>
