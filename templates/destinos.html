@@ -14,8 +14,13 @@
       </div>
 
       <div class="col-lg-3">
-        <label for="data">Data</label>
-        <input type="date" name="data" ng-model="dados.intinerario.data" ng-required="true"/>
+        <label for="chegada">Chegada</label>
+        <input type="date" name="chegada" ng-model="dados.intinerario.chegada" ng-required="true"/>
+      </div>
+
+      <div class="col-lg-3">
+        <label for="saida">Saída</label>
+        <input type="date" name="saida" ng-model="dados.intinerario.saida" ng-required="true"/>
       </div>
 
       <div class="col-lg-3">
@@ -42,7 +47,8 @@
       <tr ng-repeat="destino in destinos">
         <td>{{destino.pais.name}}</td>
         <td>{{destino.cidade}}</td>
-        <td>{{destino.data | date: "dd/MM/yyyy"}}</td>
+        <td>{{destino.chegada | date: "dd/MM/yyyy"}}</td>
+        <td>{{destino.saida | date: "dd/MM/yyyy"}}</td>
         <td>
           <a class="btn btn-default btn-sm" ng-click='editar(destino)'>
             <i class="glyphicon glyphicon-edit" />

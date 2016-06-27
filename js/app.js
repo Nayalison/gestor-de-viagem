@@ -1,4 +1,4 @@
-angular.module("GestorDeViagens", ['ngRoute'])
+angular.module("GestorDeViagens", ['ngResource', 'ngRoute'])
 
   .directive('selectPais', ['$http',function($http) {
     return {
@@ -54,6 +54,32 @@ angular.module("GestorDeViagens", ['ngRoute'])
       };
   })
 
+  .factory('Weather',['$resource', function($resource) {
+    return $resource('http://api.openweathermap.org',
+      {
+        APPID: '11e753b575c1e12044717812948e2d01'
+      },
+      {
+        getWeatherByCity: {
+          method:'GET',
+          url: 'http://api.openweathermap.org/data/2.5/weather?q=:q&&APPID=:APPID',
+          params: {
+            q: '@q',
+            APPID: '11e753b575c1e12044717812948e2d01'
+          }
+        }
+      }
+    );
+  }])
+
+
+  // .factory('WeatherService',function() {
+  //   return {
+  //     key: '11e753b575c1e12044717812948e2d01',
+  //     urlBase: 'http://api.openweathermap.org/data/2.5/weather?',
+  //     getWeatherByCity: function
+  //   };
+  // })
 
   .factory('ViagemService',function() {
     return {
@@ -66,7 +92,7 @@ angular.module("GestorDeViagens", ['ngRoute'])
 
   })
 
-  .controller('DestinoController', function(ViagemService, $routeParams, $scope) {
+  .controller('DestinoController', ['ViagemService', 'Weather', '$routeParams', '$scope', function(ViagemService, Weather, $routeParams, $scope) {
 
     $scope.destinos = ViagemService.intinerarios;
     $scope.dados = {
@@ -79,6 +105,11 @@ angular.module("GestorDeViagens", ['ngRoute'])
       } else {
         ViagemService.intinerarios.push(intinerario);
       }
+
+      Weather.getWeatherByCity({q:'Fortaleza,br'}, function(data) {
+        console.log(data);
+      });
+
       $scope.dados.intinerario = {};
     };
 
@@ -90,7 +121,7 @@ angular.module("GestorDeViagens", ['ngRoute'])
     $scope.deletar = function(intinerario) {
       Array.remove($scope.destinos, intinerario);
     };
-  })
+  }])
 
   .controller('GastosController', function(ViagemService, $routeParams, $scope) {
 
