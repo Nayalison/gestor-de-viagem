@@ -1,15 +1,51 @@
 angular.module("GestorDeViagens", ['ngResource', 'ngRoute'])
 
-  .directive('selectPais', ['$http',function($http) {
+  .config(['$httpProvider', function($httpProvider) {
+          $httpProvider.defaults.useXDomain = true;
+          $httpProvider.defaults.headers.common = 'Content-Type: application/json';
+          delete $httpProvider.defaults.headers.common['X-Requested-With'];
+      }
+  ])
+
+  .factory('Pais',['$resource', function($resource) {
+    return $resource('http://services.groupkt.com/',
+      {
+      },
+      {
+        all: {
+          method:'GET',
+          url: 'http://services.groupkt.com/country/get/all'
+        }
+      }
+    );
+  }])
+
+  .factory('Weather',['$resource', function($resource) {
+    return $resource('http://api.openweathermap.org',
+      {
+        APPID: '11e753b575c1e12044717812948e2d01'
+      },
+      {
+        getWeatherByCity: {
+          method:'GET',
+          url: 'http://api.openweathermap.org/data/2.5/weather?q=:q&&APPID=:APPID&&units=metric',
+          params: {
+            q: '@q',
+            APPID: '11e753b575c1e12044717812948e2d01'
+          }
+        }
+      }
+    );
+  }])
+
+  .directive('selectPais', ['$http','Pais',function($http, Pais) {
     return {
       restrict: 'E',
       transclude: true,
       link: function(scope, element, attrs) {
-        $http({method: 'GET', url: 'http://services.groupkt.com/country/get/all' })
-          .success(function (data) {
-             scope.$_paises = data.RestResponse.result;
-           }
-        );
+        Pais.all().$promise.then(function(data){
+          scope.$_paises = data.RestResponse.result;
+        });
         scope.$_paises_label = attrs.noSelectionLabel || "Selecione um pais";
       },
       template:'<select ng-options="pais as pais.name for pais in $_paises track by pais.name">'+
@@ -54,32 +90,7 @@ angular.module("GestorDeViagens", ['ngResource', 'ngRoute'])
       };
   })
 
-  .factory('Weather',['$resource', function($resource) {
-    return $resource('http://api.openweathermap.org',
-      {
-        APPID: '11e753b575c1e12044717812948e2d01'
-      },
-      {
-        getWeatherByCity: {
-          method:'GET',
-          url: 'http://api.openweathermap.org/data/2.5/weather?q=:q&&APPID=:APPID',
-          params: {
-            q: '@q',
-            APPID: '11e753b575c1e12044717812948e2d01'
-          }
-        }
-      }
-    );
-  }])
 
-
-  // .factory('WeatherService',function() {
-  //   return {
-  //     key: '11e753b575c1e12044717812948e2d01',
-  //     urlBase: 'http://api.openweathermap.org/data/2.5/weather?',
-  //     getWeatherByCity: function
-  //   };
-  // })
 
   .factory('ViagemService',function() {
     return {
@@ -106,7 +117,7 @@ angular.module("GestorDeViagens", ['ngResource', 'ngRoute'])
         ViagemService.intinerarios.push(intinerario);
       }
 
-      Weather.getWeatherByCity({q:'Fortaleza,br'}, function(data) {
+      intinerario.tempo = Weather.getWeatherByCity({q: intinerario.cidade+','+intinerario.pais.alpha2_code}, function(data) {
         console.log(data);
       });
 
@@ -120,6 +131,16 @@ angular.module("GestorDeViagens", ['ngResource', 'ngRoute'])
 
     $scope.deletar = function(intinerario) {
       Array.remove($scope.destinos, intinerario);
+    };
+
+    $scope.showTempo = function(intinerario) {
+      $scope.tempo = intinerario.tempo;
+      $scope.modalTempo.open();
+    };
+
+    $scope.fecharModalTempo = function() {
+      $scope.tempo = {};
+      $scope.modalTempo.close();
     };
   }])
 

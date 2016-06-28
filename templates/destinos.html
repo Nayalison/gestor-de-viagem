@@ -24,7 +24,7 @@
       </div>
 
       <div class="col-lg-2">
-       <label for="adicionar">&emsp;</label>
+       <label for="adicionar" style="display: -webkit-box;">&emsp;</label>
        <input name="adicionar" type="submit" class="btn-small btn-primary" value="Adicionar">
       </div>
     </div>
@@ -53,6 +53,9 @@
           <td>{{destino.saida | date: "dd/MM/yyyy"}}</td>
           <td>
             <div class="btn-toolbar" role="toolbar">
+              <button type="button" class="btn btn-default btn-sm" ng-click='showTempo(destino)'>
+                <span class="glyphicon glyphicon-info-sign" />
+              </button>
               <button type="button" class="btn btn-default btn-sm" ng-click='editar(destino)'>
                 <span class="glyphicon glyphicon-edit" />
               </button>
@@ -66,4 +69,54 @@
       </tbody>
     </table>
   </div>
+
+  <modal title='Tempo' bind-to='modalTempo'>
+    <modal-content>
+      <form class="form" rule="form">
+
+        <div class="row">
+          <div class="col-lg-2">
+            <div class="form-group">
+              <label class="control-label" for='tempo.name'>Cidade</label>
+              <samp> {{tempo.name}}</samp>
+            </div>
+          </div>
+
+          <div class="col-lg-2">
+            <div class="form-group">
+              <label class="control-label" for='tempo.main.pressure'>Pressão</label>
+              <samp> {{tempo.main.pressure}}</samp>
+            </div>
+          </div>
+
+          <div class="col-lg-2">
+            <div class="form-group">
+              <label class="control-label" for='tempo.main.temp'>Temperatura</label>
+              <samp> {{tempo.main.temp}} °C</samp>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-2">
+            <div class="form-group">
+              <label class="control-label" for='empo.main.temp_max'>Máxima</label>
+              <samp>{{tempo.main.temp_max}} °C</samp>
+            </div>
+          </div>
+
+          <div class="col-lg-2">
+            <div class="form-group">
+              <label class="control-label" for='tempo.main.temp_min'>Mínima</label>
+              <samp>{{tempo.main.temp_min}} °C</samp>
+            </div>
+          </div>
+        </div>
+
+        </form>
+        <modal-footer>
+          <button type="button" class="button button-default" ng-click='fecharModalTempo()' value="Fechar" />
+        </modal-footer>
+    </modal-content>
+  </modal>
 </fieldset>
