@@ -85,7 +85,7 @@
           <div class="col-lg-2">
             <div class="form-group">
               <label class="control-label" for='tempo.main.pressure'>Pressão</label>
-              <samp> {{tempo.main.pressure}}</samp>
+              <samp> {{tempo.main.pressure}} hPa</samp>
             </div>
           </div>
 
@@ -98,6 +98,13 @@
         </div>
 
         <div class="row">
+          <div class="col-lg-2">
+            <div class="form-group">
+              <label class="control-label" for='tempo.main.humidity'>Humidade</label>
+              <samp>{{tempo.main.humidity}} %</samp>
+            </div>
+          </div>
+
           <div class="col-lg-2">
             <div class="form-group">
               <label class="control-label" for='empo.main.temp_max'>Máxima</label>
@@ -115,7 +122,7 @@
 
         </form>
         <modal-footer>
-          <button type="button" class="button button-default" ng-click='fecharModalTempo()' value="Fechar" />
+          <button type="button" class="button button-default" ng-click='fecharModalTempo()' value="Fechar">Fechar</button>
         </modal-footer>
     </modal-content>
   </modal>
